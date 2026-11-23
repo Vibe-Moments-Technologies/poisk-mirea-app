@@ -3,12 +3,18 @@
 # key.properties НЕ коммитится (в .gitignore): там пароль от ключа публикации.
 #
 # Как создать ключ (один раз):
-#   keytool -genkey -v -keystore mirea-career.jks -keyalg RSA -keysize 2048 ^
-#           -validity 10000 -alias mirea-career
+#   keytool -genkeypair -v -keystore poisk-mirea.jks -storetype JKS ^
+#           -keyalg RSA -keysize 2048 -validity 10000 -alias poisk-mirea
 #
 # Путь storeFile — от каталога app/android/.
+#
+# ВАЖНО: ключ подписи нельзя терять и нельзя менять после первой публикации
+# в Google Play — обновления перестанут устанавливаться. Копию .jks и пароль
+# храни вне репозитория (менеджер паролей + резервная копия).
+# В CI ключ живёт в секретах ANDROID_KEYSTORE_BASE64 / _PASSWORD /
+# ANDROID_KEY_ALIAS / ANDROID_KEY_PASSWORD.
 
-storeFile=../mirea-career.jks
+storeFile=../poisk-mirea.jks
 storePassword=ЗАМЕНИ_МЕНЯ
-keyAlias=mirea-career
+keyAlias=poisk-mirea
 keyPassword=ЗАМЕНИ_МЕНЯ
