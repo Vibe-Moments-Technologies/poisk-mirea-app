@@ -4,12 +4,21 @@
 вуза и компаний-партнёров в одной ленте. Без регистрации — избранное
 и профиль студента хранятся только на устройстве.
 
-Технический идентификатор пакета остался `mirea_career`
-(`ru.mirea.career` на Android, `ru.mirea.career.mireaCareer` на iOS):
-смена package name — это уже другое приложение для сторов, с потерей
-установок и данных. Ребрендинг касается названия и оформления.
+## Идентификаторы
+
+| Что | Значение |
+|---|---|
+| Android applicationId / namespace | `ru.mirea.poisk` |
+| iOS bundle id | `ru.mirea.poisk` |
+| Репозиторий | `Vibe-Moments-Technologies/poisk-mirea-app` |
+| Артефакты сборки | `poisk-mirea-preview.apk` / `.ipa` |
+| Dart-пакет | `mirea_career` (внутреннее имя, пользователь его не видит) |
+
+Идентификаторы сменили ДО первой публикации в сторах — приложение
+считается новым, установки и подписи прежней версии не наследуются.
+Dart-пакет оставлен прежним сознательно: это имя для импортов в коде,
+на стор и устройство оно не влияет.
 
 - Бэкенд: self-hosted PocketBase, анонимное чтение ленты.
 - Состояние: Riverpod.
-- Сборки: `.github/workflows/preview-main.yml` (rolling-preview),
-  артефакты `poisk-mirea-preview.apk` / `.ipa`.
+- Сборки: `.github/workflows/preview-main.yml` (rolling-preview).

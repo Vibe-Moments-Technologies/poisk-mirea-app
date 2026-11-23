@@ -89,12 +89,12 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "ru.mirea.career" "\0"
+            VALUE "CompanyName", "ru.mirea.poisk" "\0"
             VALUE "FileDescription", "Поиск МИРЭА" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mirea_career" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 ru.mirea.career. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mirea_career.exe" "\0"
+            VALUE "InternalName", "poisk_mirea" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 ru.mirea.poisk. All rights reserved." "\0"
+            VALUE "OriginalFilename", "poisk_mirea.exe" "\0"
             VALUE "ProductName", "Поиск МИРЭА" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

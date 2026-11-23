@@ -1,4 +1,4 @@
-package ru.mirea.career
+package ru.mirea.poisk
 
 import io.flutter.embedding.android.FlutterActivity
 

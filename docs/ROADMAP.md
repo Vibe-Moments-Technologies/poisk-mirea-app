@@ -38,7 +38,7 @@
 > (`EPERM`, `process_win.cc:744`). Требуется обычная сессия — см. docs/DEVELOPMENT.md.
 
 ## Этап 4 — Сборка и CI ✅ настроено
-- [x] Репозиторий `Vibe-Moments-Technologies/mirea-career-app` (приватный), 139 файлов, секреты Supabase в CI.
+- [x] Репозиторий `Vibe-Moments-Technologies/poisk-mirea-app` (приватный), 139 файлов, секреты Supabase в CI.
 - [x] `dev.ps1` — локально: `run`, `apk`, `apk-rel`, `connect` (BlueStacks), `devices`, `logs`, `check`, `test`, `doctor`, `clean`.
 - [x] `tools/versioning.py` — единый источник версии: тег → stable/beta/rc, dev из main, contrib из ветки; BUILD_NUMBER = epoch-секунды.
 - [x] `tools/publish_release.py` — релиз с APK + AAB + IPA, rolling-preview для dev.

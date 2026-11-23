@@ -111,9 +111,9 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          echo "$KEYSTORE_B64" | base64 -d > mirea-career.jks
+          echo "$KEYSTORE_B64" | base64 -d > poisk-mirea.jks
           {
-            echo "storeFile=../mirea-career.jks"
+            echo "storeFile=../poisk-mirea.jks"
             echo "storePassword=$KEYSTORE_PASSWORD"
             echo "keyAlias=$KEY_ALIAS"
             echo "keyPassword=$KEY_PASSWORD"
@@ -160,7 +160,7 @@ jobs:
       - name: 🧹 Remove keystore
         if: always()
         working-directory: app/android
-        run: rm -f mirea-career.jks key.properties
+        run: rm -f poisk-mirea.jks key.properties
 
       - name: 🏷️ Prepare artifacts
         env:

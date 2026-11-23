@@ -113,7 +113,7 @@ build-tools 36) — скрипт использует его. Если пона�
 
 ## Сборки в GitHub Actions
 
-Репозиторий: `Vibe-Moments-Technologies/mirea-career-app` (приватный).
+Репозиторий: `Vibe-Moments-Technologies/poisk-mirea-app` (приватный).
 
 Три workflow, схема взята из `krasava-app` и адаптирована под Flutter:
 
@@ -133,8 +133,8 @@ build-tools 36) — скрипт использует его. Если пона�
 
 1. Пуш в `main` (или Actions → Main Preview Build → Run workflow).
 2. Через ~10–20 минут: **Releases** → `preview`.
-3. Android-тестировщик ставит `kariera-mirea-preview.apk`.
-4. iOS-тестировщик скачивает `kariera-mirea-preview.ipa`.
+3. Android-тестировщик ставит `poisk-mirea-preview.apk`.
+4. iOS-тестировщик скачивает `poisk-mirea-preview.ipa`.
 
 Для проверки отдельной ветки до мержа — `test-build.yml`: запускаешь вручную,
 указываешь ветку, забираешь артефакты со страницы запуска.
@@ -210,15 +210,22 @@ debug-ключом подписываются нормально.
 Как получить base64 от ключа:
 
 ```powershell
-[Convert]::ToBase64String([IO.File]::ReadAllBytes("mirea-career.jks")) | Set-Clipboard
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("poisk-mirea.jks")) | Set-Clipboard
 ```
 
 Хранилище создаётся один раз:
 
 ```powershell
-keytool -genkey -v -keystore mirea-career.jks -keyalg RSA -keysize 2048 `
-        -validity 10000 -alias mirea-career
+keytool -genkey -v -keystore poisk-mirea.jks -keyalg RSA -keysize 2048 `
+        -validity 10000 -alias poisk-mirea
 ```
+
+> Ключ НЕ привязан к applicationId и имени репозитория: он подписывает
+> байты APK. После ребрендинга («Карьера РТУ МИРЭА» → «Поиск МИРЭА»,
+> `ru.mirea.career` → `ru.mirea.poisk`) **менять секреты подписи не нужно** —
+> прежний ключ продолжает работать. Новый ключ нужен только если хочешь
+> начать историю подписи с нуля ДО первой публикации в Play: после
+> публикации сменить ключ уже нельзя, обновления перестанут ставиться.
 
 Затем скопируй `app/android/key.properties.example` в `app/android/key.properties`
 и впиши пароли — для локальных release-сборок. Оба файла в `.gitignore`.

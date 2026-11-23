@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.mirea.career"
+    namespace = "ru.mirea.poisk"
     compileSdk = flutter.compileSdkVersion
     // ndkVersion намеренно не задаём: у нас нет нативного кода, а требование
     // NDK заставляет CI качать ~1 ГБ и падать, если он не установлен.
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ru.mirea.career"
+        applicationId = "ru.mirea.poisk"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

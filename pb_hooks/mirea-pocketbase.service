@@ -1,5 +1,5 @@
 [Unit]
-Description=PocketBase for MIREA Career (vmt-mireacareer.l1ratch.ru)
+Description=PocketBase for Poisk MIREA (vmt-mireacareer.l1ratch.ru)
 After=network.target
 
 [Service]

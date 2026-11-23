@@ -1,4 +1,4 @@
-﻿# dev.ps1 — локальная сборка и запуск приложения (Windows).
+# dev.ps1 — локальная сборка и запуск приложения (Windows).
 #
 # Запуск:  .\dev.ps1              — список команд
 #          .\dev.ps1 run          — собрать и запустить на подключённом устройстве
@@ -193,8 +193,8 @@ switch ($Command) {
       Write-Host "Размер: $([math]::Round((Get-Item $apk).Length / 1MB, 1)) МБ"
       if ($OutDir) {
         New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
-        Copy-Item $apk (Join-Path $OutDir 'kariera-mirea-debug.apk') -Force
-        Write-Host "Скопирован в: $OutDir\kariera-mirea-debug.apk" -ForegroundColor Green
+        Copy-Item $apk (Join-Path $OutDir 'poisk-mirea-debug.apk') -Force
+        Write-Host "Скопирован в: $OutDir\poisk-mirea-debug.apk" -ForegroundColor Green
       }
     }
   }
