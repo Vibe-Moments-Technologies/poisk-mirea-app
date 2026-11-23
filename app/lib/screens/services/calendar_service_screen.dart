@@ -203,7 +203,7 @@ class _CalendarServiceScreenState extends ConsumerState<CalendarServiceScreen> {
                 controller: controller,
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                 itemCount: posts.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
                 itemBuilder: (_, i) {
                   final p = posts[i];
                   return _EventTile(
@@ -259,7 +259,7 @@ class _TabsBar extends StatelessWidget {
           horizontal: AppInsets.horizontal(MediaQuery.sizeOf(context).width),
         ),
         itemCount: tabs.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (_, i) {
           final active = i == selected;
           final scheme = Theme.of(context).colorScheme;
