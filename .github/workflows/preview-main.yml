@@ -119,13 +119,13 @@ jobs:
       - name: 🏷️ Prepare preview APK
         run: |
           mkdir -p dist
-          cp app/build/app/outputs/flutter-apk/app-release.apk dist/kariera-mirea-preview.apk
+          cp app/build/app/outputs/flutter-apk/app-release.apk dist/poisk-mirea-preview.apk
           ls -lh dist
 
       - uses: actions/upload-artifact@v4
         with:
           name: android-preview
-          path: dist/kariera-mirea-preview.apk
+          path: dist/poisk-mirea-preview.apk
           if-no-files-found: error
 
   build_ipa:
@@ -187,13 +187,13 @@ jobs:
         run: |
           mkdir -p Payload
           cp -r Runner.app Payload/
-          zip -r -q kariera-mirea-preview.ipa Payload
+          zip -r -q poisk-mirea-preview.ipa Payload
           ls -lh *.ipa
 
       - uses: actions/upload-artifact@v4
         with:
           name: ios-preview
-          path: app/build/ios/iphoneos/kariera-mirea-preview.ipa
+          path: app/build/ios/iphoneos/poisk-mirea-preview.ipa
           if-no-files-found: error
 
   update_preview:

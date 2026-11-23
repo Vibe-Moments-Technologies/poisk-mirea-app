@@ -926,7 +926,7 @@ void main() {
         scrollable: homeScrollable,
       );
       await tester.pump();
-      expect(tester.getTopLeft(find.text('Карьера МИРЭА')).dy, lessThan(200));
+      expect(tester.getTopLeft(find.text('Поиск МИРЭА')).dy, lessThan(200));
 
       // Тап по УЖЕ активной вкладке дока — лента плавно наверх.
       final position = tester

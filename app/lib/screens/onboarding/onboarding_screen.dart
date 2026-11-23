@@ -292,7 +292,7 @@ class _Welcome extends StatelessWidget {
               style: AppText.largeTitle.copyWith(fontSize: 34)),
           const SizedBox(height: 14),
           Text(
-            'Это «Карьера РТУ МИРЭА» — все вакансии, стажировки и события '
+            'Это «Поиск МИРЭА» — все вакансии, стажировки и события '
             'университета в одном приложении. Регистрация не нужна.',
             style: AppText.body.copyWith(height: 1.5),
           ),

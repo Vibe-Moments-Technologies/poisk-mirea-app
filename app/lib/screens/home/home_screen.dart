@@ -196,7 +196,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             // со старыми данными до перезапуска.
             onRefresh: _refreshAll,
             child: PinnedHeaderScreen(
-              title: 'Карьера МИРЭА',
+              title: 'Поиск МИРЭА',
               actions: [
                 HeaderAction(
                   icon: Icons.tune_rounded,

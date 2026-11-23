@@ -170,8 +170,8 @@ jobs:
           mkdir -p dist
           SUFFIX=""
           [ "$CHANNEL" != "stable" ] && SUFFIX="-v${VERSION}"
-          cp app/build/app/outputs/flutter-apk/app-release.apk "dist/kariera-mirea${SUFFIX}.apk"
-          cp app/build/app/outputs/bundle/release/app-release.aab "dist/kariera-mirea${SUFFIX}.aab"
+          cp app/build/app/outputs/flutter-apk/app-release.apk "dist/poisk-mirea${SUFFIX}.apk"
+          cp app/build/app/outputs/bundle/release/app-release.aab "dist/poisk-mirea${SUFFIX}.aab"
           ls -lh dist
 
       - uses: actions/upload-artifact@v4
@@ -244,7 +244,7 @@ jobs:
           cp -r Runner.app Payload/
           SUFFIX=""
           [ "$CHANNEL" != "stable" ] && SUFFIX="-v${VERSION}"
-          zip -r -q "kariera-mirea${SUFFIX}.ipa" Payload
+          zip -r -q "poisk-mirea${SUFFIX}.ipa" Payload
           ls -lh *.ipa
 
       - uses: actions/upload-artifact@v4

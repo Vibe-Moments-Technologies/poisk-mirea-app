@@ -52,13 +52,13 @@ class AboutScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Icon(
-                    Icons.work_outline_rounded,
+                    Icons.search_rounded,
                     size: 40,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 14),
-                Text('Карьера РТУ МИРЭА', style: AppText.title),
+                Text('Поиск МИРЭА', style: AppText.title),
                 const SizedBox(height: 4),
                 Text(
                   'Библиотека возможностей университета',
@@ -70,11 +70,11 @@ class AboutScreen extends StatelessWidget {
           const SizedBox(height: 28),
           const _Section('О НАС'),
           Text(
-            '«Карьера РТУ МИРЭА» — проект команды Vibe Moments Technologies '
-            'совместно с университетом: мы соединяем студентов и их будущую '
-            'карьеру в одном приложении. Вакансии, стажировки, стипендии и '
-            'события собираются в единую ленту — без поиска по десятку '
-            'каналов и рассылок.',
+            '«Поиск МИРЭА» — проект команды Vibe Moments Technologies '
+            'совместно с университетом: мы собираем возможности '
+            'университета в одном месте. Вакансии, стажировки, стипендии и '
+            'события идут единой лентой — искать их по десятку каналов '
+            'и рассылок больше не нужно.',
             style: AppText.body.copyWith(height: 1.5),
           ),
           const SizedBox(height: 5),

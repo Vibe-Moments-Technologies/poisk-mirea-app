@@ -210,7 +210,7 @@ def emit(info: dict) -> None:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Версионирование сборок «Карьера РТИ МИРЭА»")
+    p = argparse.ArgumentParser(description="Версионирование сборок «Поиск МИРЭА»")
     p.add_argument("command", choices=["resolve", "prepare", "show"])
     p.add_argument("--channel", default="stable")
     p.add_argument("--tag", default=None)

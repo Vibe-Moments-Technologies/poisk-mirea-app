@@ -65,6 +65,41 @@ def upload_asset(tag: str, asset: str, repo: str, attempts: int = 3) -> None:
     sys.exit(f"не удалось загрузить {asset} после {attempts} попыток:\n{last}")
 
 
+def prune_stale_assets(tag: str, assets: list[str], repo: str) -> None:
+    """Убрать ассеты прежних имён из rolling-релиза.
+
+    После ребрендинга («Карьера РТУ МИРЭА» → «Поиск МИРЭА») файлы
+    называются poisk-mirea-*.apk/.ipa вместо kariera-mirea-*. Без чистки
+    в релизе `preview` лежали бы ОБА набора: пользователь качал бы
+    устаревшую сборку под старым именем.
+
+    Удаляем только те типы, что пришли в этой публикации (.apk/.aab/.ipa),
+    и только не совпадающие с новыми именами — прочие файлы релиза
+    (например, примечания) не трогаем. Сбой чистки не валит публикацию.
+    """
+    import json
+
+    fresh = {Path(a).name for a in assets}
+    exts = {Path(a).suffix for a in assets}
+    listing = run(
+        ["gh", "release", "view", tag, "--repo", repo, "--json", "assets"],
+        check=False,
+    )
+    if not listing:
+        return
+    try:
+        names = [a["name"] for a in json.loads(listing).get("assets", [])]
+    except (ValueError, KeyError, TypeError):
+        return
+    stale = [n for n in names if n not in fresh and Path(n).suffix in exts]
+    for name in stale:
+        run(
+            ["gh", "release", "delete-asset", tag, name, "--repo", repo, "--yes"],
+            check=False,
+        )
+        print(f"  удалён устаревший ассет: {name}")
+
+
 def release_notes(version: str, prev_tag: str | None) -> str:
     """Список изменений: из CHANGELOG.md, иначе из коммитов."""
     changelog = Path("CHANGELOG.md")
@@ -87,7 +122,7 @@ def release_notes(version: str, prev_tag: str | None) -> str:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Публикация релиза «Карьера РТУ МИРЭА»")
+    p = argparse.ArgumentParser(description="Публикация релиза «Поиск МИРЭА»")
     p.add_argument("--channel", required=True, choices=["stable", "beta", "rc", "dev"])
     p.add_argument("--version", required=True)
     p.add_argument("--build-number", required=True)
@@ -112,7 +147,7 @@ def main() -> None:
         prerelease = True
     else:
         tag = f"v{args.version}"
-        title = f"Карьера РТУ МИРЭА {args.version}"
+        title = f"Поиск МИРЭА {args.version}"
         notes = release_notes(args.version, args.prev_tag)
         prerelease = args.channel != "stable"
 
@@ -135,6 +170,7 @@ def main() -> None:
             # --clobber: rolling-preview перезаписывает старые файлы,
             # иначе gh откажется загружать одноимённый ассет
             upload_asset(tag, asset, args.repo)
+        prune_stale_assets(tag, assets, args.repo)
         gh(
             "release", "edit", tag,
             "--title", title, "--notes", notes, "--repo", args.repo,

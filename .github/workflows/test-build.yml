@@ -126,7 +126,7 @@ jobs:
       - name: 🏷️ Prepare artifact
         run: |
           mkdir -p dist
-          NAME="kariera-mirea-${{ steps.slug.outputs.artifact_slug }}"
+          NAME="poisk-mirea-${{ steps.slug.outputs.artifact_slug }}"
           cp app/build/app/outputs/flutter-apk/app-release.apk "dist/${NAME}.apk"
           ls -lh dist
 
@@ -204,7 +204,7 @@ jobs:
         run: |
           mkdir -p Payload
           cp -r Runner.app Payload/
-          zip -r -q "kariera-mirea-${SLUG}.ipa" Payload
+          zip -r -q "poisk-mirea-${SLUG}.ipa" Payload
           ls -lh *.ipa
 
       - uses: actions/upload-artifact@v4
