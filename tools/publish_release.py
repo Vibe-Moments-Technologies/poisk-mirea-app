@@ -193,6 +193,104 @@ def main() -> None:
     print(f"\nRelease: {url or tag}")
     print(f"Assets : {', '.join(Path(a).name for a in assets)}")
 
+    if args.ipa and Path(args.ipa).exists():
+        update_gbox_source(args, tag)
+
+
+# ---------------- Источник GBox/AltStore ----------------
+
+APP_NAME = "Поиск МИРЭА"
+BUNDLE_ID = "ru.mirea.poisk"
+DEVELOPER = "Vibe Moments Technologies"
+TINT = "0A84FF"  # AppColors.accent
+DESCRIPTION = (
+    "Вакансии, стажировки, стипендии и события РТУ МИРЭА и партнёров "
+    "в одной ленте. Без регистрации: избранное и профиль хранятся "
+    "только на устройстве."
+)
+
+
+def update_gbox_source(args, tag: str) -> None:
+    """Обновить apps.json на gh-pages — источник для GBox/AltStore/SideStore.
+
+    Без этого файла магазин-клиент не видит новых сборок: он читает
+    downloadURL и version из JSON, а не страницу релиза. Раньше источник
+    указывал на старый репозиторий и старое имя IPA — после ребрендинга
+    обе ссылки отдавали 404, и установка не работала.
+
+    Пишем через Contents API (без клонирования gh-pages): один файл,
+    атомарно, с sha предыдущей версии. Сбой не валит публикацию релиза —
+    артефакты уже загружены, источник можно обновить повторным запуском.
+    """
+    import base64
+    import json
+    from datetime import datetime, timezone
+
+    repo = args.repo
+    path = "apps.json"
+    branch = "gh-pages"
+    now = datetime.now(timezone.utc)
+    ipa_name = Path(args.ipa).name
+    download = f"https://github.com/{repo}/releases/download/{tag}/{ipa_name}"
+    icon = (
+        f"https://raw.githubusercontent.com/{repo}/main/app/ios/Runner/"
+        "Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png"
+    )
+    entry = {
+        "name": APP_NAME,
+        "bundleIdentifier": BUNDLE_ID,
+        "developerName": DEVELOPER,
+        "localizedDescription": (
+            f"{DESCRIPTION}\n\nКанал: {args.channel}\n"
+            f"Сборка: {args.version}\n"
+            f"Обновлено: {now.strftime('%Y-%m-%d %H:%M')} UTC"
+        ),
+        "iconURL": icon,
+        "version": args.version,
+        "versionDate": now.isoformat(),
+        "downloadURL": download,
+        "tintColor": TINT,
+        "channel": args.channel,
+        "size": Path(args.ipa).stat().st_size,
+    }
+    source = {
+        "name": APP_NAME,
+        "identifier": "poisk-mirea",
+        "sourceURL": f"https://raw.githubusercontent.com/{repo}/{branch}/{path}",
+        "apps": [entry],
+    }
+
+    api = f"repos/{repo}/contents/{path}?ref={branch}"
+    sha = None
+    existing = run(["gh", "api", api, "--jq", ".sha"], check=False)
+    if existing and len(existing) == 40:
+        sha = existing
+
+    payload = {
+        "message": f"source: {APP_NAME} {args.version} ({args.channel})",
+        "content": base64.b64encode(
+            json.dumps(source, ensure_ascii=False, indent=2).encode("utf-8")
+        ).decode("ascii"),
+        "branch": branch,
+    }
+    if sha:
+        payload["sha"] = sha
+
+    tmp = Path(".gbox-source-payload.json")
+    tmp.write_text(json.dumps(payload), encoding="utf-8")
+    try:
+        result = subprocess.run(
+            ["gh", "api", "-X", "PUT", f"repos/{repo}/contents/{path}",
+             "--input", str(tmp)],
+            text=True, capture_output=True,
+        )
+        if result.returncode == 0:
+            print(f"GBox source: {source['sourceURL']}")
+        else:
+            print(f"::warning::источник GBox не обновлён: {result.stderr.strip()}")
+    finally:
+        tmp.unlink(missing_ok=True)
+
 
 if __name__ == "__main__":
     main()
